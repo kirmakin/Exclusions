@@ -3,6 +3,7 @@ package ru.netology.manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.*;
+import ru.netology.exceptions.NotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,6 +35,14 @@ class ProductManagerTest {
         Product[] expected = new Product[]{first, second, third, fifth, sixth};
         Product[] actual = manager.getAll();
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldGenerateExceptionWhenTryToRemoveMissingElement() {
+        int idToRemove = 7;
+        Exception e = assertThrows(NotFoundException.class, () -> manager.removeById(idToRemove));
+        System.out.println(e.getMessage());
+        e.printStackTrace();
     }
 
     @Test
